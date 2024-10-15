@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Fiachra">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homeStyle.css') }}"/>
+    <title>Lost Volumes Login</title>
+</head>
+<body>
+    <div class="Login-Container">
+        <div class="Login-Bar">
+            <p>Login.exe</p>
+        </div>
+        <div class="Popup-Body">
+            <form class="Login-Form" method="post">
+                <input type="text" placeholder="Username" name="username" class="popup-input">
+                <input type="password" placeholder="Password" name="password" class="popup-input">
+                <button type="submit" class="popup-button">Log In</button>
+            </form>
+            <form action="{{ url_for('HomePub') }}">
+                <button class="popup-button">Enter</button>
+            </form>
+        </div>
+    </div>      
+</body>
+</html>

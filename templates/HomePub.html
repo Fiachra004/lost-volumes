@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homeStyle.css') }}"/>
+    <title>Home</title>
+</head>
+<body>
+    <nav class="Navbar">
+        <div class="Nav-Container">
+            <a href="{{ url_for('Login') }}">
+                <img class="Nav-Img" src="{{ url_for('static', filename='Scroll.png') }}">        
+            </a> 
+        </div>
+    </nav>
+    <div class="Container">
+        <div class="Sidebar">    
+            <div class="Add-Folder-Box">
+                <div class="Folder-Bar">
+                    <p>Folders.exe</p>
+                </div>
+                <div class="Folder-Content">
+                    <div class="Folder-List">
+                        {% for folder in folders %}
+                        <p onmouseover="openFolder('{{ folder.folder_name }}')" onmouseout="closeFolder('{{ folder.folder_name }}')">
+                            <img class="Folder-Icon" id="{{ folder.folder_name }}" src="{{ url_for('static', filename='Close_Folder.png') }}">
+                            <input type="hidden" name="button_folder" value="{{ folder.folder_name }}">
+                            <button class="Folder" onclick="showFiles('{{ folder.folder_name }}', 'addFileBox', 'fileList');showGallery('{{folder.folder_name}}', 'mediaGallery', 'galleryList')">{{ folder.folder_name }}</button>
+                        </p>
+                        {% endfor %}
+                    </div> 
+                    
+                </div>            
+
+            </div>  
+
+            <div class="Add-File-Box" id="addFileBox">                    
+                <div class="File-Bar">
+                    <p>Files.exe</p>                    
+                    <button class="Close" onclick="closeModal('addFileBox')">&times;</button>
+                </div>
+                <div class="File-Content">
+                    <div class="File-List" id="fileList"></div>    
+                </div>
+            </div>                
+        </div>            
+    
+
+        <div class="Media-Box-Container">
+            <div class="Media-Box">
+                <div class="Media-Box-Bar">
+                    <p>No_Media.exe</p>                    
+                </div>
+                <p class="Media-Box-Text"> 404_Error_NO_mEDIA </p>
+            </div>
+            <div class="Media-Gallery" id="mediaGallery">
+                <div class="Media-Gallery-Bar">
+                    <p>Files.exe</p>                    
+                    <button class="Close" onclick="closeModal('mediaGallery')">&times;</button>
+                </div>
+                <div class="Gallery-Container">
+                    <div class="Gallery-List" id="galleryList"></div>
+                </div>    
+            </div>
+            <div class="Media-View" id="mediaView">                
+                <div class="Media-View-Bar">
+                    <p>Files_Viewer.exe</p>                    
+                    <button class="Close" onclick="GallerySwitch('mediaView', 'mediaGallery')">&times;</button>
+                </div>
+                <div class="Media-Player-Container" id="mediaPlayerContainer"></div>
+                <div class="Sub-Gallery" id="subGallery">
+                    <div class="Scroll-Container" id="scrollContainer">
+                        <button class="Left-Scroll-Button" id="leftScrollButton" onclick="LeftScroll()"> < </button>
+                        <div class="Scroll-Gallery" id="scrollGallery"></div>
+                        <button class="Right-Scroll-Button" id="rightScrollButton" onclick="scrollRight()"> > </button>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        
+    </div>
+    <div class="Footer">
+        <div class="Footer-Container">
+            <p>LostVolumes</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePopup(id) {
+            var popup = document.getElementById(id);
+            popup.style.visibility = (popup.style.visibility === "visible") ? "hidden" : "visible";
+        }
+
+        function showFiles(folderName, id, elementid) {
+            fetch(`/get_files/${folderName}`)
+                .then(response => response.json())
+                .then(data => {
+                    var fileList = document.getElementById(elementid);
+                    fileList.innerHTML = "";
+                    for (let i = 0; i < data.files.length; i++) {
+                        var button = document.createElement("button");
+                        button.classList.add("Showfiles-Button");
+                        button.onclick = function() {
+                            showMedia(folderName, 'mediaView', 'mediaPlayerContainer', 'scrollGallery', data.files[i], data.thumbnail[i]);
+                        }
+
+                        var filename = data.files[i];
+
+                        const extension = filename.split('.').pop().toLowerCase();
+                        const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv'];
+                        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+                        const audioExtensions = ['mp3', 'wav', 'ogg', 'flac', 'aac'];
+                        const pdfExtensions = ['pdf'];
+                        var image = document.createElement('img');
+                        image.classList.add('File-Image');
+
+                        if (videoExtensions.includes(extension)) {
+                            image.src = "{{ url_for('static', filename='Video.png') }}"
+                        } else if (imageExtensions.includes(extension)) {
+                            image.src = "{{ url_for('static', filename='Drawing.png') }}"
+                        } else if (audioExtensions.includes(extension)) {
+                            image.src = "{{ url_for('static', filename='Audio.png') }}"
+                        } else if (pdfExtensions.includes(extension)) {
+                            image.src = "{{ url_for('static', filename='Writing.png') }}"
+                        } else {
+                            image.src = "{{ url_for('static', filename='Writing.png') }}"
+                        }  
+
+                        button.appendChild(image);
+
+                        var p = document.createElement("p");
+                        p.classList.add("Showfiles-P");
+                        p.textContent = data.files[i];
+
+                        button.appendChild(p);
+
+                        var p2 = document.createElement("p");
+                        p2.classList.add("Showfiles-P2");
+                        p2.appendChild(button);
+                        fileList.appendChild(p2);
+                    };
+                    document.getElementById(id).style.visibility = "visible";
+                });
+        }
+
+        function showGallery(folderName, id, elementid) {
+            fetch(`/get_files/${folderName}`)
+                .then(response => response.json())
+                .then(data => {
+                    var galleryList = document.getElementById(elementid);
+                    galleryList.innerHTML = "";
+                    for (let i = 0; i < data.files.length; i++) {
+                        var button = document.createElement("button");
+                        button.classList.add("Gallery-Button")
+                        var img = document.createElement("img");
+                        img.src = `/thumbnails/${data.thumbnail[i]}`;
+                        var p = document.createElement("p");
+                        p.textContent = data.clean_name[i];
+                        button.appendChild(img);
+                        button.appendChild(p);
+                        button.onclick = function() {
+                            showMedia(folderName, 'mediaView', 'mediaPlayerContainer', 'scrollGallery', data.files[i], data.thumbnail[i]);
+                        };
+                        galleryList.appendChild(button);
+                    }
+                    document.getElementById(id).style.visibility = "visible";
+                })
+                .catch(error => console.error('Error fetching gallery:', error));
+        }
+
+        function showMedia(folderName, id, first_elementid, second_elementid, filename, thumbnail) {
+            fetch(`/get_files/${folderName}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("showMedia called"); 
+                    console.log("folderName:", folderName);  
+                    console.log("filename:", filename); 
+                    console.log("thumbnail:", thumbnail); 
+                
+
+                    var mediaPlayerContainer = document.getElementById('mediaPlayerContainer')
+                    mediaPlayerContainer.innerHTML = ''
+
+                    const extension = filename.split('.').pop().toLowerCase();
+                    const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv'];
+                    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+                    const audioExtensions = ['mp3', 'wav', 'ogg', 'flac', 'aac'];
+                    const pdfExtensions = ['pdf'];
+
+                    var mediaContainer = document.createElement('div');   
+                    mediaContainer.classList.add('Media-Container');
+
+                    if (videoExtensions.includes(extension)) {
+                        var video = document.createElement('video');
+                        video.controls = true;
+                        video.src = `/Files/${filename}`;
+                        video.classList.add('Video-Player')
+                        mediaContainer.appendChild(video);
+                        mediaPlayerContainer.appendChild(mediaContainer);
+                    } else if (imageExtensions.includes(extension)) {
+                        var img_container = document.createElement('div');
+                        img_container.classList.add('Img-Container');
+                        var img = document.createElement('img');
+                        img.src = `/Files/${filename}`;
+                        img.classList.add('Image-Player');
+                        img_container.appendChild(img);
+                        mediaContainer.appendChild(img_container);
+                        mediaPlayerContainer.appendChild(mediaContainer);
+                    } else if (audioExtensions.includes(extension)) {
+                        var div = document.createElement('div');
+                        div.classList.add('Audio-Container');
+                        var audio = document.createElement('audio');
+                        var img = document.createElement('img');
+                        img.classList.add('Audio-Img');
+                        img.src = `/thumbnails/${thumbnail}`;
+                        audio.controls = true;
+                        audio.src = `/Files/${filename}`;
+                        audio.classList.add('Audio-Player');
+                        div.appendChild(img);
+                        div.appendChild(audio);
+                        mediaContainer.appendChild(div);
+                        mediaPlayerContainer.appendChild(mediaContainer);
+                    } else if (pdfExtensions.includes(extension)) {
+                        var embed = document.createElement('embed');
+                        embed.src = `/Files/${filename}`;
+                        embed.type = "application/pdf";
+                        embed.classList.add('Embed-Player')
+                        mediaContainer.appendChild(embed);
+                        mediaPlayerContainer.appendChild(mediaContainer);
+                    } else {
+                        var p = document.createElement('p');
+                        p.textContent = 'Unsupported file type';
+                        mediaPlayerContainer.appendChild(p);
+                    }
+
+                    var scrollGallery = document.getElementById(second_elementid);
+                    scrollGallery.innerHTML = "";
+                    for (let i = 0; i < data.files.length; i++) {
+                        var button = document.createElement("button");
+                        var img = document.createElement("img");
+                        img.src = `/thumbnails/${data.thumbnail[i]}`;
+                        img.classList.add('Scroll-Gallery-Image');
+                        var p = document.createElement("p");
+                        p.textContent = data.clean_name[i];
+                        p.classList.add('Scroll-Gallery-Text');
+                        button.appendChild(img);
+                        button.appendChild(p);
+                        button.classList.add('Scroll-Gallery-Button');
+                        button.onclick = function() {
+                            showMedia(folderName, id, first_elementid, second_elementid, data.files[i], data.thumbnail[i]);
+                        };
+                        scrollGallery.appendChild(button);
+                    }
+                    document.getElementById('mediaView').style.visibility = "visible";
+                    document.getElementById('mediaGallery').style.visibility = "hidden"; 
+                    checkOverflow();
+                });
+        }
+      
+
+        function closeModal(id) {
+            document.getElementById(id).style.visibility = "hidden";
+        }
+
+        function GallerySwitch(id, id2) {
+            document.getElementById(id).style.visibility = "hidden";
+            document.getElementById(id2).style.visibility = "visible";
+            document.getElementById('leftScrollButton').style.visibility = "hidden";
+            document.getElementById('rightScrollButton').style.visibility = "hidden";
+        }
+
+        function LeftScroll() {
+            var scrollGallery = document.getElementById('scrollGallery');
+            scrollGallery.scrollBy({
+                left: -100,
+                behavior: 'smooth'
+            });
+            console.log("scrolling left");
+        }
+
+        function scrollRight() {
+            var scrollGallery = document.getElementById('scrollGallery');
+            scrollGallery.scrollBy({ 
+                left: 100, 
+                behavior: 'smooth'     
+            });
+            console.log("scrolling right");
+        }
+
+        function isOverflowing(element) {
+            return element.scrollWidth > element.clientWidth;
+        }
+
+        function checkOverflow() {
+            var scrollGallery = document.getElementById('scrollGallery');
+            var leftButton = document.getElementById('leftScrollButton');
+            var rightButton = document.getElementById('rightScrollButton');
+            
+            if (isOverflowing(scrollGallery)) {
+                leftButton.style.visibility = 'visible';
+                rightButton.style.visibility = 'visible';
+            } else {
+                leftButton.style.visibility = 'hidden';
+                rightButton.style.visibility = 'hidden';
+            }
+        }
+
+        function openFolder(foldername) {
+            document.getElementById(foldername).src = "{{ url_for('static', filename='Open_folder.png') }}";
+        }
+
+        function closeFolder(foldername) {
+            document.getElementById(foldername).src = "{{ url_for('static', filename='Close_Folder.png') }}";
+        }
+
+        window.addEventListener('load', checkOverflow);
+        window.addEventListener('resize', checkOverflow);
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,749 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #2d2d2d;
+}
+
+.Navbar {
+    width: 100%;
+    height: 7vh;
+}
+
+.Nav-Container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.Nav-Img {
+    width: 50px;
+    height: 50px;
+}
+
+.Footer {
+    display: block;
+    width: 100%;
+    height: 7vh;
+}
+
+.Footer-Container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.Container {
+    display: flex;
+    height: 100%;
+}
+
+.Sidebar {
+    position: relative;
+    width: 18%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    Overflow: hidden;
+}
+
+.Add-Folder-Box {
+    justify-content: center;
+    left: 5%;
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    background-color: rgb(75, 79, 83);
+
+}
+
+.Folder-Bar {
+    display: flex;
+    flex-flow: row nowrap;
+    font-weight: bold;
+    justify-self: center;
+    width: calc(100% - 8px);
+    height: 20px;
+    margin: 3px 4px 1px 3px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Folder-Bar p {
+    margin: 0;
+    margin-left: 3px;
+    color: white;
+}
+
+.Folder-Content {
+    margin-left: 5%;
+    display: block;
+    width: 90%;
+    height: 85%;
+    padding-top: 1px;
+    overflow-x: hidden;
+}
+
+.Folder-List {
+    margin-bottom: 5px;
+    width: 93%;
+    margin-left: 3%;
+}
+
+.Folder-List img {
+    height: 20px;
+    width: 20px;
+}
+
+.Folder-List p {
+    padding: 5px;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    display: flex;
+    align-content: center;
+}
+
+.Folder-List p:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Folder {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    flex-flow: row nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.Folder-Button {
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    margin: 5%;
+    padding: 5px;
+}
+
+.Folder-Button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Folder-Form {
+    position: absolute;
+    z-index: 4;
+    top: 40%;
+    left: 40%;
+    height: 75px;
+    width: 300px;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    background-color: rgb(75, 79, 83);
+    visibility: hidden;
+}
+
+.Folder-Form-Bar,
+.File-Form-Bar {
+    display: grid;
+    flex-flow: row nowrap;
+    font-weight: bold;
+    justify-self: center;
+    width: calc(100% - 3px);
+    height: 20px;
+    margin-left: 1px;
+    margin-top: 1px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Folder-Form-Bar p,
+.File-Form-Bar p {
+    margin: 0;
+    margin-left: 3px;
+    color: white;
+}
+
+.Folder-Form-Bar button,
+.File-Form-Bar button {
+    position: absolute;
+    justify-self: right;
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    margin: 0;
+    padding: 0;
+    margin-right: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.Folder-Form-Bar button:hover,
+.File-Form-Bar button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+
+.Folder-Form form {
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    margin: 10px;
+}
+
+.Folder-Sub {}
+
+
+.Add-File-Box {
+    justify-content: center;
+    left: 5%;
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    z-index: 2;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+.Add-Folder-Box,
+.Add-File-Box,
+.Media-Box,
+.Media-Gallery,
+.Media-View,
+.Folder-Content,
+.File-Content {
+    background-color: rgb(75, 79, 83);
+    box-shadow: inset 3px 3px #979797, inset -3px -3px #282828;
+}
+
+.File-Bar {
+    display: grid;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-weight: bold;
+    width: calc(100% - 8px);
+    height: 20px;
+    margin: 3px 4px 1px 3px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Media-Gallery-Bar,
+.Media-Box-Bar {
+    display: grid;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-weight: bold;
+    width: calc(100% - 5px);
+    height: 20px;
+    margin: 3px 4px 1px 3px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Media-View-Bar {
+    display: grid;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-weight: bold;
+    width: calc(100% - 5px);
+    height: 20px;
+    margin: 3px 4px 1px 3px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.File-Bar p,
+.Media-Gallery-Bar p,
+.Media-Box-Bar p,
+.Media-View-Bar p {
+    justify-self: left;
+    margin: 0;
+    margin-left: 3px;
+    color: white;
+}
+
+.File-Bar button,
+.Media-Gallery-Bar button,
+.Media-View-Bar button {
+    position: absolute;
+    justify-self: right;
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    margin: 0;
+    padding: 0;
+    margin-right: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.File-Bar button:hover,
+.Media-Gallery-Bar button:hover,
+.Media-View-Bar button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.File-Content {
+    padding-top: 2%;
+    margin-left: 5%;
+    width: 90%;
+    height: 85%;
+    overflow-x: hidden;
+}
+
+.File-List {
+    width: 100%;
+    margin-bottom: 5px;
+    margin-left: 3%;
+}
+
+.Showfiles-Button {
+    background: transparent;
+    display: flex;
+    width: 90%;
+    padding: 5px;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    align-content: center;
+}
+
+.Showfiles-Button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Showfiles-Button p {
+    margin-top: 3px;
+    margin-left: 3px;
+}
+
+.File-Image {
+    margin-left: 0;
+    height: 20px;
+    width: 20px;
+}
+
+.Showfiles-P2 {}
+
+.Showfiles-P {
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    margin-left: 3px;
+    white-space: nowrap;
+    height: 10%;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.File-Button {
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    margin: 5%;
+    padding: 5px;
+}
+
+.File-Button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.File-Form {
+    top: 40%;
+    left: 40%;
+    height: 200px;
+    width: 275px;
+    position: absolute;
+    z-index: 4;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    background-color: rgb(75, 79, 83);
+    visibility: hidden;
+}
+
+.File-Form form {
+    margin-left: 10px;
+}
+
+.Media-Box-Container {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Media-Box {
+    height: 100%;
+    width: 100%;
+}
+
+.Media-Box-Text {
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    margin-top: 25%;
+    margin-left: 40%;
+}
+
+.Media-Gallery {
+    position: absolute;
+    visibility: hidden;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    z-index: 3;
+}
+
+.Gallery-Close-Button {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.Gallery-Container {
+    box-shadow: inset 2px 2px #979797, inset -2px -2px #282828;
+    display: flex;
+    margin-left: 2%;
+    width: 95%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.Gallery-List {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.Gallery-Button {
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    padding: 10px 20px;
+    border: 1px solid white;
+    cursor: pointer;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+}
+
+.Gallery-Button:hover {
+    background-color: #444444;
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Gallery-Button img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.Media-View {
+    position: absolute;
+    visibility: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.Media-Close-Button {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.Media-Player-Container {
+    position: absolute;
+    width: 100%;
+    height: 85%;
+    overflow: auto;
+}
+
+.Media-Container {
+    position: absolute;
+    top: 2%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+}
+
+.Media-Container Img {
+    object-fit: contain;
+}
+
+.Video-Player {
+    height: 100%;
+    width: 100%;
+}
+
+.Img-Container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+}
+
+.Image-Player {
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    aspect-ratio: auto;
+    width: 50%;
+    height: auto;
+
+}
+
+
+
+.Audio-Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.Audio-Img {
+    width: 40%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.Audio-Player {
+    width: 100%;
+    max-width: 100%;
+}
+
+.Embed-Player {
+    height: 100%;
+    width: 100%
+}
+
+.Sub-Gallery {
+    position: absolute;
+    width: 100%;
+    height: 16%;
+    bottom: 0%;
+    overflow: hidden;
+}
+
+.Scroll-Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.Scroll-Gallery {
+    height: 100%;
+    background-color: transparent;
+    bottom: 5%;
+    left: 5%;
+    overflow-x: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.Left-Scroll-Button {
+    visibility: hidden;
+    height: 30px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.Right-Scroll-Button {
+    visibility: hidden;
+    height: 30px;
+    margin-right: 10px;
+    margin-left: 5px;
+
+}
+
+.Left-Scroll-Button,
+.Right-Scroll-Button {
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+}
+
+.Left-Scroll-Button:hover,
+.Right-Scroll-Button:hover {
+    background-color: #535353;
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Scroll-Gallery-Button {
+    background-color: transparent;
+    width: 85px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+}
+
+.Scroll-Gallery-Button:hover {
+    background-color: #535353;
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #979797;
+}
+
+.Scroll-Gallery-Image {
+    margin-top: 3px;
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    object-fit: cover;
+}
+
+.Scroll-Gallery-Text {
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    align-self: center;
+    justify-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.Footer-Container {
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+}
+
+.Login-Container {
+    padding-top: 1px;
+    display: block;
+    margin-left: 25%;
+    margin-top: 25%;
+    width: 360px;
+    height: 140px;
+    display: block;
+    background-color: #444444;
+    box-shadow: inset 3px 3px #979797, inset -3px -3px #282828;
+}
+
+.Login-Bar {
+    display: grid;
+    flex-flow: row nowrap;
+    font-weight: bold;
+    justify-self: center;
+    width: calc(100% - 7px);
+    height: 20px;
+    margin-left: 3.5px;
+    margin-top: 3px;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(105, 105, 105));
+    border: 1px solid #282828;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Login-Bar p {
+    justify-self: left;
+    margin: 0;
+    margin-left: 3px;
+    color: white;
+}
+
+.Popup-Body {
+    margin-left: 5px;
+}
+
+.Login-Form {
+    align-items: left;
+}
+
+.form-input,
+.form-button {
+    margin: 10px 0;
+}
+
+.popup-button {
+    margin-top: 10px;
+    background-color: transparent;
+    color: white;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    box-shadow: inset 1px 1px #979797, inset -1px -1px #282828;
+    padding: 5px;
+}
+
+.popup-button:hover {
+    box-shadow: inset 1px 1px #282828, inset -1px -1px #282828;
+}
+
+.popup-button a {
+    text-decoration: none;
+}
